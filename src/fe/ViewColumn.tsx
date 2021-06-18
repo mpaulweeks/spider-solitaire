@@ -11,7 +11,6 @@ const CompColumn = styled.div`
   flex-wrap: nowrap;
 
   padding: 1em;
-  border-right: 1px solid grey;
 `;
 
 export function ViewColumn(props: { column: Column }) {

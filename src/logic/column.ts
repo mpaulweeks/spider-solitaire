@@ -1,8 +1,8 @@
 import { Card } from "./card";
-import { CardCode, CardState } from "./types";
+import { CardCode, ColumnState } from "./types";
 
 export class Column {
-  readonly cards: Card[] = [];
+  constructor(readonly cards: Card[] = []) { }
 
   dealFaceDown(code: CardCode) {
     this.cards.push(new Card({ code, faceUp: false }));
@@ -18,7 +18,13 @@ export class Column {
     return this.cards[this.cards.length - 1];
   }
 
-  serialize(): CardState[] {
-    return this.cards.map((c) => c.serialize());
+  serialize(): ColumnState {
+    return {
+      cards: this.cards.map((c) => c.serialize()),
+    };
+  }
+  static deserialize(state: ColumnState) {
+    const cards = state.cards.map(card => Card.deserialize(card));
+    return new Column(cards);
   }
 }

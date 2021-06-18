@@ -1,5 +1,5 @@
 import { Column } from "./column";
-import { DeckData } from "./types";
+import { BoardState, DeckData } from "./types";
 import { range } from "./util";
 
 export class Board {
@@ -25,5 +25,13 @@ export class Board {
       throw new Error("deal is impossible");
     }
     this.columns.forEach((c) => c.dealFaceUp(this.remainingDeck.pop()!));
+  }
+
+  serialize(): BoardState {
+    return {
+      originalDeck: this.originalDeck,
+      remainingDeck: this.remainingDeck,
+      columns: this.columns.map(c => c.serialize()),
+    };
   }
 }

@@ -23,4 +23,7 @@ export class Card {
   serialize(): CardState {
     return this.state;
   }
+  static deserialize(state: CardState) {
+    return new Card(state);
+  }
 }
