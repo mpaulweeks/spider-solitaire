@@ -12,7 +12,7 @@ export class Board {
 
     // deal all but 5 deals
     for (let i = 0; this.remainingDeck.length > (5 * numColumns); i++) {
-      const column = this.columns[this.columns.length % i];
+      const column = this.columns[i % this.columns.length];
       column.dealFaceDown(this.remainingDeck.pop()!);
     }
 

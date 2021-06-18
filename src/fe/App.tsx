@@ -1,29 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { GenerateDeck } from '../logic/util';
+import { Board, GenerateDeck } from '../logic';
+import { ViewBoard } from './ViewBoard';
 
 function App() {
-  console.log(GenerateDeck(1));
-  console.log(GenerateDeck(4));
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const board = new Board(GenerateDeck(4));
+  return <ViewBoard board={board} />;
 }
 
 export default App;
