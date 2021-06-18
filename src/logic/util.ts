@@ -1,4 +1,4 @@
-import { DeckData } from "./types";
+import { CardState, DeckState } from "./types";
 
 export function range(length: number): number[] {
   const out = [] as number[];
@@ -34,17 +34,21 @@ export function shuffle<T>(array: T[]) {
   return array;
 }
 
-export function GenerateCard(suit: number, value: number) {
-  return suit * 100 + value;
+export function GenerateCard(index: number, suit: number, value: number): CardState {
+  return {
+    index,
+    code: suit * 100 + value,
+    faceUp: false,
+  };
 }
 
 export function GenerateDeck(numSuits: number) {
   const rows = range(8).map((i) => {
     const suit = i % numSuits;
-    const cards = range(13).map((v) => GenerateCard(suit, v));
+    const cards = range(13).map((v) => GenerateCard(i * 13 + v, suit, v));
     return cards;
   });
-  const deck: DeckData = flatten(rows);
+  const deck: DeckState = flatten(rows);
   shuffle(deck);
   return deck;
 }

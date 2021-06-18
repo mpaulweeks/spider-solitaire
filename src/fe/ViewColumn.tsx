@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewCard } from './ViewCard';
-import { Column } from "../logic";
+import { Board, Column, Trigger } from "../logic";
 
 import styled from 'styled-components';
 const CompColumn = styled.div`
@@ -13,11 +13,18 @@ const CompColumn = styled.div`
   padding: 1em;
 `;
 
-export function ViewColumn(props: { column: Column }) {
+export function ViewColumn(props: {
+  column: Column,
+  trigger: Trigger<Board>,
+}) {
+  const {
+    column,
+    trigger,
+  } = props;
   return (
     <CompColumn>
       {props.column.cards.map((card, ci) => (
-        <ViewCard key={ci} card={card} />
+        <ViewCard key={ci} column={column} card={card} trigger={trigger} />
       ))}
     </CompColumn>
   )

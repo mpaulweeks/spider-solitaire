@@ -1,16 +1,17 @@
 export type CardCode = number; // svv
-export type DeckData = CardCode[];
-
 export type CardState = {
   code: CardCode;
+  index: number;
   faceUp: boolean;
 };
+export type DeckState = CardState[];
 export type ColumnState = {
+  index: number;
   cards: CardState[];
 };
 export type BoardState = {
-  originalDeck: DeckData;
-  remainingDeck: DeckData;
+  originalDeck: DeckState;
+  remainingDeck: DeckState;
   columns: ColumnState[];
 };
 

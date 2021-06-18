@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from "../logic";
+import { Board, Card, Column, Trigger } from "../logic";
 
 import styled from 'styled-components';
 const CompCard = styled.div<{ color: string }>`
@@ -40,11 +40,19 @@ const valueToString = [
   'K',
 ];
 
-export function ViewCard(props: { card: Card }) {
-  const { card } = props;
+export function ViewCard(props: {
+  column: Column,
+  card: Card,
+  trigger: Trigger<Board>,
+}) {
+  const {
+    column,
+    card,
+    trigger,
+  } = props;
   if (card.state.faceUp) {
     return (
-      <CompCard color={suitToColor[card.suit]}>
+      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.move({ columnIndex: column.index, cardIndex: card.state.index, }))}>
         {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
     )

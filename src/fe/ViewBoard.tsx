@@ -27,8 +27,16 @@ const CompColumnContainer = styled.div`
   flex-wrap: nowrap;
 `;
 
-export function ViewBoard(props: { board: Board, trigger: Trigger<Board>, reset: Callback<Board>, }) {
-  const { board, trigger, reset } = props;
+export function ViewBoard(props: {
+  board: Board,
+  trigger: Trigger<Board>,
+  reset: Callback<Board>,
+}) {
+  const {
+    board,
+    trigger,
+    reset,
+  } = props;
   const remainingDeals = board.remainingDeals();
   return (
     <CompBoard>
@@ -55,7 +63,7 @@ export function ViewBoard(props: { board: Board, trigger: Trigger<Board>, reset:
       </CompHeader>
       <CompColumnContainer>
         {board.columns.map((column, ci) => (
-          <ViewColumn key={ci} column={column} />
+          <ViewColumn key={ci} column={column} trigger={trigger} />
         ))}
       </CompColumnContainer>
     </CompBoard>
