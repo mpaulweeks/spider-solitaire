@@ -14,8 +14,8 @@ export function App() {
     return onTrigger;
   }, [boardState, setBoardState]);
 
-  const reset = useCallback((board: Board) => {
-    setBoardState(board.serialize());
+  const reset = useCallback((newBoard: Board) => {
+    setBoardState(newBoard.serialize());
   }, [setBoardState]);
 
   const board = Board.deserialize(boardState);
