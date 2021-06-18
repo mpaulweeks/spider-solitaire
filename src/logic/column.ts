@@ -5,10 +5,10 @@ export class Column {
   readonly cards: Card[] = [];
 
   dealFaceDown(code: CardCode) {
-    this.cards.push(new Card({ code, faceUp: false, }));
+    this.cards.push(new Card({ code, faceUp: false }));
   }
   dealFaceUp(code: CardCode) {
-    this.cards.push(new Card({ code, faceUp: true, }));
+    this.cards.push(new Card({ code, faceUp: true }));
   }
   revealBottom() {
     this.cards[this.cards.length - 1]?.reveal();
@@ -19,6 +19,6 @@ export class Column {
   }
 
   serialize(): CardState[] {
-    return this.cards.map(c => c.serialize());
+    return this.cards.map((c) => c.serialize());
   }
 }

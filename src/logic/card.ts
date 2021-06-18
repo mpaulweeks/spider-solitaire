@@ -13,7 +13,7 @@ export class Card {
     this.state.faceUp = true;
   }
   canMoveBelowCard(parent: Card) {
-    return (this.value + 1) === parent.value;
+    return this.value + 1 === parent.value;
   }
   canMoveBelowColumn(column: Column) {
     const current = column.getCurrent();
