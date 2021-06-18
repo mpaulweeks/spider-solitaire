@@ -37,7 +37,7 @@ export class Board {
     const valid = otherCols.filter(col => card.canMoveBelowColumn(col));
     return valid;
   }
-  move(pointers: { columnIndex: number, cardIndex: number }) {
+  performMove(pointers: { columnIndex: number, cardIndex: number }) {
     const column = this.columns.filter(c => c.index === pointers.columnIndex)[0];
     const card = column.cards.filter(c => c.state.index === pointers.cardIndex)[0];
     const canMove = column.canMove(card);

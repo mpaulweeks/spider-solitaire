@@ -10,19 +10,25 @@ export class Column {
   revealBottom() {
     this.cards[this.cards.length - 1]?.reveal();
   }
-  private indexOf(card: Card): number {
+  private relIndexOf(card: Card): number {
     return this.cards.findIndex(c => c.state.index === card.state.index);
   }
   canMove(card: Card) {
     if (!card.state.faceUp) { return false; }
-    const index = this.indexOf(card);
+    const index = this.relIndexOf(card);
     if (index < 0) { return false; }
     if (index === this.cards.length - 1) { return true; }
-    // todo detect chain
+    const head = this.getHead();
+    if (head) {
+      const headIndex = this.relIndexOf(head);
+      if (headIndex > 0 && headIndex <= index) {
+        return true;
+      }
+    }
     return false;
   }
   pop(topCard: Card): Card[] {
-    const index = this.indexOf(topCard);
+    const index = this.relIndexOf(topCard);
     if (index < 0) { throw new Error('illegal move'); }
     const popped: Card[] = [];
     while (this.cards.length > index) {
@@ -34,7 +40,18 @@ export class Column {
     this.cards.push(...newCards);
   }
 
-  getCurrent(): Card | undefined {
+  getHead(): Card | undefined {
+    let relIndex = this.cards.length - 1;
+    let head = this.cards[relIndex];
+    let parent = this.cards[relIndex - 1];
+    while (parent && head && head.canMoveBelowCard(parent)) {
+      relIndex--;
+      head = this.cards[relIndex];
+      parent = this.cards[relIndex - 1];
+    }
+    return head;
+  }
+  getLeaf(): Card | undefined {
     return this.cards[this.cards.length - 1];
   }
 

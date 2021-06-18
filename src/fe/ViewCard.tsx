@@ -52,7 +52,7 @@ export function ViewCard(props: {
   } = props;
   if (card.state.faceUp) {
     return (
-      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.move({ columnIndex: column.index, cardIndex: card.state.index, }))}>
+      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.performMove({ columnIndex: column.index, cardIndex: card.state.index, }))}>
         {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
     )

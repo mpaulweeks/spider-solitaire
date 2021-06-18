@@ -16,7 +16,7 @@ export class Card {
     return this.value + 1 === parent.value;
   }
   canMoveBelowColumn(column: Column) {
-    const current = column.getCurrent();
+    const current = column.getLeaf();
     return !current || this.canMoveBelowCard(current);
   }
 
