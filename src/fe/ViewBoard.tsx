@@ -16,6 +16,8 @@ const CompHeader = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
+
+  padding: 1em;
 `;
 const CompColumnContainer = styled.div`
   display: flex;
@@ -26,14 +28,20 @@ const CompColumnContainer = styled.div`
 `;
 
 export function ViewBoard(props: { board: Board, trigger: Trigger<Board> }) {
+  const { board, trigger } = props;
+  const remainingDeals = board.remainingDeals();
   return (
     <CompBoard>
       <CompHeader>
-        <button onClick={props.trigger(board => board.deal())}>Deal</button>
+        {remainingDeals ? (
+          <button onClick={trigger(board => board.deal())}>
+            Deal {remainingDeals}
+          </button>
+        ) : null}
       </CompHeader>
       <CompColumnContainer>
-        {props.board.columns.map(column => (
-          <ViewColumn column={column} />
+        {board.columns.map((column, ci) => (
+          <ViewColumn key={ci} column={column} />
         ))}
       </CompColumnContainer>
     </CompBoard>

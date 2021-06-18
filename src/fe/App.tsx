@@ -3,16 +3,18 @@ import { Board, Callback, GenerateDeck } from '../logic';
 import { ViewBoard } from './ViewBoard';
 
 function App() {
-  const [board, setBoard] = useState(new Board(GenerateDeck(4)));
+  const [boardState, setBoardState] = useState(Board.createNew(GenerateDeck(4)).serialize());
 
   const triggerBoard = useCallback((cb: Callback<Board>) => {
     const onTrigger = () => {
+      const board = Board.deserialize(boardState);
       cb(board);
-      setBoard(board);
+      setBoardState(board.serialize());
     };
     return onTrigger;
-  }, [board, setBoard]);
+  }, [boardState, setBoardState]);
 
+  const board = Board.deserialize(boardState);
   return <ViewBoard board={board} trigger={triggerBoard} />;
 }
 

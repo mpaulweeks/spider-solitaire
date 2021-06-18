@@ -16,8 +16,8 @@ const CompColumn = styled.div`
 export function ViewColumn(props: { column: Column }) {
   return (
     <CompColumn>
-      {props.column.cards.map(card => (
-        <ViewCard card={card} />
+      {props.column.cards.map((card, ci) => (
+        <ViewCard key={ci} card={card} />
       ))}
     </CompColumn>
   )
