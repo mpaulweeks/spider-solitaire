@@ -1,5 +1,5 @@
 import React from 'react';
-import { Board, Trigger } from "../logic";
+import { Board, Callback, GenerateDeck, Trigger } from "../logic";
 import { ViewColumn } from './ViewColumn';
 
 import styled from 'styled-components';
@@ -27,11 +27,25 @@ const CompColumnContainer = styled.div`
   flex-wrap: nowrap;
 `;
 
-export function ViewBoard(props: { board: Board, trigger: Trigger<Board> }) {
-  const { board, trigger } = props;
+export function ViewBoard(props: { board: Board, trigger: Trigger<Board>, reset: Callback<Board>, }) {
+  const { board, trigger, reset } = props;
   const remainingDeals = board.remainingDeals();
   return (
     <CompBoard>
+      <CompHeader>
+        <button onClick={() => reset(Board.createNew(GenerateDeck(1)))}>
+          1 suit
+        </button>
+        <button onClick={() => reset(Board.createNew(GenerateDeck(2)))}>
+          2 suit
+        </button>
+        <button onClick={() => reset(Board.createNew(GenerateDeck(3)))}>
+          3 suit
+        </button>
+        <button onClick={() => reset(Board.createNew(GenerateDeck(4)))}>
+          4 suit
+        </button>
+      </CompHeader>
       <CompHeader>
         {remainingDeals ? (
           <button onClick={trigger(b => b.deal())}>

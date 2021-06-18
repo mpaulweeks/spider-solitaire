@@ -13,16 +13,31 @@ const CompCard = styled.div<{ color: string }>`
 `;
 
 const suitToSymbol = [
-  '♥️',
   '♠️',
+  '♥️',
   '♦️',
   '♣️',
 ];
 const suitToColor = [
-  'red',
   'black',
+  'red',
   'darkviolet',
   'green',
+];
+const valueToString = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  'J',
+  'Q',
+  'K',
 ];
 
 export function ViewCard(props: { card: Card }) {
@@ -30,7 +45,7 @@ export function ViewCard(props: { card: Card }) {
   if (card.state.faceUp) {
     return (
       <CompCard color={suitToColor[card.suit]}>
-        {card.value} {suitToSymbol[card.suit]}
+        {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
     )
   }
