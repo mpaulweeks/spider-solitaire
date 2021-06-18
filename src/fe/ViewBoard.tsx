@@ -34,7 +34,7 @@ export function ViewBoard(props: { board: Board, trigger: Trigger<Board> }) {
     <CompBoard>
       <CompHeader>
         {remainingDeals ? (
-          <button onClick={trigger(board => board.deal())}>
+          <button onClick={trigger(b => b.deal())}>
             Deal {remainingDeals}
           </button>
         ) : null}

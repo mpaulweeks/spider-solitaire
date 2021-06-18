@@ -30,11 +30,11 @@ export class Board {
     return {
       originalDeck: this.originalDeck,
       remainingDeck: this.remainingDeck,
-      columns: this.columns.map(c => c.serialize()),
+      columns: this.columns.map((c) => c.serialize()),
     };
   }
   static deserialize(state: BoardState) {
-    const columns = state.columns.map(column => Column.deserialize(column));
+    const columns = state.columns.map((column) => Column.deserialize(column));
     return new Board({
       ...state,
       columns,

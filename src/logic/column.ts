@@ -2,7 +2,7 @@ import { Card } from "./card";
 import { CardCode, ColumnState } from "./types";
 
 export class Column {
-  constructor(readonly cards: Card[] = []) { }
+  constructor(readonly cards: Card[] = []) {}
 
   dealFaceDown(code: CardCode) {
     this.cards.push(new Card({ code, faceUp: false }));
@@ -24,7 +24,7 @@ export class Column {
     };
   }
   static deserialize(state: ColumnState) {
-    const cards = state.cards.map(card => Card.deserialize(card));
+    const cards = state.cards.map((card) => Card.deserialize(card));
     return new Column(cards);
   }
 }
