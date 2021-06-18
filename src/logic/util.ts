@@ -36,7 +36,7 @@ export function shuffle<T>(array: T[]) {
 
 export function GenerateCard(index: number, suit: number, value: number): CardState {
   return {
-    index,
+    id: index,
     code: suit * 100 + value,
     faceUp: false,
   };

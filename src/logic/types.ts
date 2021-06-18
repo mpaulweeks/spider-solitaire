@@ -1,7 +1,7 @@
 export type CardCode = number; // svv
 export type CardState = {
+  id: number;
   code: CardCode;
-  index: number;
   faceUp: boolean;
 };
 export type DeckState = CardState[];

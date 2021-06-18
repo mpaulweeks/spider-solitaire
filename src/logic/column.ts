@@ -11,7 +11,7 @@ export class Column {
     this.cards[this.cards.length - 1]?.reveal();
   }
   private relIndexOf(card: Card): number {
-    return this.cards.findIndex(c => c.state.index === card.state.index);
+    return this.cards.findIndex(c => c.state.id === card.state.id);
   }
   canMove(card: Card) {
     if (!card.state.faceUp) { return false; }

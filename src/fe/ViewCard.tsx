@@ -10,6 +10,8 @@ const CompCard = styled.div<{ color: string }>`
   color: var(--suit);
   border: 1px solid var(--suit);
   border-radius: 0.5em;
+
+  cursor: pointer;
 `;
 
 const suitToSymbol = [
@@ -52,7 +54,7 @@ export function ViewCard(props: {
   } = props;
   if (card.state.faceUp) {
     return (
-      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.performMove({ columnIndex: column.index, cardIndex: card.state.index, }))}>
+      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.performMove({ columnIndex: column.index, cardId: card.state.id, }))}>
         {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
     )
