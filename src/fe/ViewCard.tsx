@@ -18,13 +18,18 @@ const suitToSymbol = [
   '♦️',
   '♣️',
 ];
+const suitToColor = [
+  'red',
+  'black',
+  'darkviolet',
+  'green',
+];
 
 export function ViewCard(props: { card: Card }) {
   const { card } = props;
   if (card.state.faceUp) {
-    const color = card.suit === 2 ? 'red' : 'black';
     return (
-      <CompCard color={color}>
+      <CompCard color={suitToColor[card.suit]}>
         {card.value} {suitToSymbol[card.suit]}
       </CompCard>
     )
