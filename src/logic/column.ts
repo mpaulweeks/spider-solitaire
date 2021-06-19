@@ -6,6 +6,7 @@ export class Column {
 
   deal(state: CardState) {
     this.cards.push(new Card(state));
+    this.checkForRun();
   }
   revealBottom() {
     this.cards[this.cards.length - 1]?.reveal();
@@ -34,10 +35,19 @@ export class Column {
     while (this.cards.length > index) {
       popped.push(this.cards.pop()!);
     }
+    this.revealBottom();
     return popped.reverse();
   }
   push(newCards: Card[]): void {
     this.cards.push(...newCards);
+    this.checkForRun();
+  }
+  checkForRun() {
+    const head = this.getHead();
+    if (head?.value !== 12) { return; }
+    const leaf = this.getLeaf();
+    if (leaf?.value !== 0) { return; }
+    this.pop(head);
   }
 
   getHead(): Card | undefined {

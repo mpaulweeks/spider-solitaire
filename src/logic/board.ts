@@ -56,7 +56,6 @@ export class Board {
     const dest = possibleMoves[0];
     if (dest) {
       const popped = column.pop(card);
-      column.revealBottom();
       dest.push(popped);
     }
   }
