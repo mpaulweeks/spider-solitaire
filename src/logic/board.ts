@@ -47,13 +47,27 @@ export class Board {
     const { column, card } = this.resolvePointers(pointers);
     return this.possibleMovesFromObj(column, card);
   }
-  performMove(pointers: Pointers) {
+  performMoveToPile(pointers: Pointers) {
     const { column, card } = this.resolvePointers(pointers);
     if (!card) { return; }
     const canMove = column.canMove(card);
     if (!canMove) { return; }
     const possibleMoves = this.possibleMovesFromObj(column, card);
-    const dest = possibleMoves[0];
+    const nonEmpty = possibleMoves.filter(col => col.cards.length > 0);
+    const dest = nonEmpty[0];
+    if (dest) {
+      const popped = column.pop(card);
+      dest.push(popped);
+    }
+  }
+  performMoveToEmpty(pointers: Pointers) {
+    const { column, card } = this.resolvePointers(pointers);
+    if (!card) { return; }
+    const canMove = column.canMove(card);
+    if (!canMove) { return; }
+    const possibleMoves = this.possibleMovesFromObj(column, card);
+    const empty = possibleMoves.filter(col => col.cards.length === 0);
+    const dest = empty[0];
     if (dest) {
       const popped = column.pop(card);
       dest.push(popped);

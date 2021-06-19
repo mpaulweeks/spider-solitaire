@@ -12,8 +12,11 @@ export class Card {
   reveal() {
     this.state.faceUp = true;
   }
-  canMoveBelowCard(parent: Card) {
+  private canMoveBelowCard(parent: Card) {
     return this.value + 1 === parent.value;
+  }
+  canMoveTogether(parent: Card) {
+    return this.suit === parent.suit && this.canMoveBelowCard(parent);
   }
   canMoveBelowColumn(column: Column) {
     const current = column.getLeaf();

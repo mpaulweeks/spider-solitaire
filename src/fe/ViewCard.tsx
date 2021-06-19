@@ -77,7 +77,8 @@ export function ViewCard(props: {
         canMove={canMove}
         color={suitToColor[card.suit]}
         background={background}
-        onClick={trigger(b => b.performMove(pointer))}
+        onClick={trigger(b => b.performMoveToPile(pointer))}
+        onContextMenu={trigger(b => b.performMoveToEmpty(pointer))}
         onMouseEnter={() => onHover(pointer)}
         onMouseLeave={() => onHover(undefined)}
       >

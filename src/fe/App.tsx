@@ -7,7 +7,8 @@ export function App() {
   const [hover, setHover] = useState(undefined as Pointers | undefined);
 
   const triggerBoard = useCallback((cb: Callback<Board>) => {
-    const onTrigger = () => {
+    const onTrigger = (e: any) => {
+      e && e.preventDefault && e.preventDefault();
       const newBoard = Board.deserialize(boardState);
       cb(newBoard);
       setBoardState(newBoard.serialize());

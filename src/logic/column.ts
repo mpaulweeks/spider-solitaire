@@ -54,7 +54,7 @@ export class Column {
     let relIndex = this.cards.length - 1;
     let head = this.cards[relIndex];
     let parent = this.cards[relIndex - 1];
-    while (parent && head && head.canMoveBelowCard(parent)) {
+    while (parent && head && head.canMoveTogether(parent)) {
       relIndex--;
       head = this.cards[relIndex];
       parent = this.cards[relIndex - 1];
