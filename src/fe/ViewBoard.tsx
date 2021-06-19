@@ -18,6 +18,10 @@ const CompHeader = styled.div`
   flex-wrap: nowrap;
 
   padding: 1em;
+
+  & > * {
+    margin-right: 1em;
+  }
 `;
 const CompColumnContainer = styled.div`
   display: flex;
@@ -46,6 +50,9 @@ export function ViewBoard(props: {
   return (
     <CompBoard>
       <CompHeader>
+        <div>
+          Restart game:
+        </div>
         <button onClick={() => reset(Board.createNew(GenerateDeck(1)))}>
           1 suit
         </button>
@@ -60,6 +67,10 @@ export function ViewBoard(props: {
         </button>
       </CompHeader>
       <CompHeader>
+        <div>
+          <div>Left click to move to the next available pile</div>
+          <div>Right click to move to the next empty pile</div>
+        </div>
         {remainingDeals ? (
           <button onClick={trigger(b => b.deal())}>
             Deal {remainingDeals}
