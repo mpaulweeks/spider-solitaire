@@ -21,7 +21,7 @@ export class Column {
     const head = this.getHead();
     if (head) {
       const headIndex = this.relIndexOf(head);
-      if (headIndex > 0 && headIndex <= index) {
+      if (headIndex >= 0 && headIndex <= index) {
         return true;
       }
     }

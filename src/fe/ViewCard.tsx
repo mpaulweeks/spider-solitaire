@@ -44,7 +44,7 @@ const valueToString = [
 
 export function ViewCard(props: {
   column: Column,
-  card: Card,
+  card: Card | undefined,
   trigger: Trigger<Board>,
 }) {
   const {
@@ -52,12 +52,19 @@ export function ViewCard(props: {
     card,
     trigger,
   } = props;
+  if (!card) {
+    return (
+      <CompCard color='grey'>
+        (empty)
+      </CompCard>
+    );
+  }
   if (card.state.faceUp) {
     return (
       <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.performMove({ columnIndex: column.index, cardId: card.state.id, }))}>
         {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
-    )
+    );
   }
   return (
     <CompCard color='grey'>

@@ -23,7 +23,10 @@ export function ViewColumn(props: {
   } = props;
   return (
     <CompColumn>
-      {props.column.cards.map((card, ci) => (
+      {column.cards.length === 0 && (
+        <ViewCard column={column} card={undefined} trigger={trigger} />
+      )}
+      {column.cards.map((card, ci) => (
         <ViewCard key={ci} column={column} card={card} trigger={trigger} />
       ))}
     </CompColumn>
