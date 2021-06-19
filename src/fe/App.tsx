@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { Board, Callback, GenerateDeck, Pointers } from '../logic';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Board, Callback, GenerateDeck, History, Pointers } from '../logic';
 import { ViewBoard } from './ViewBoard';
 
+const history = new History(GenerateDeck(4));
+
 export function App() {
-  const [boardState, setBoardState] = useState(Board.createNew(GenerateDeck(4)).serialize());
+  const [boardState, setBoardState] = useState(history.peek());
   const [hover, setHover] = useState(undefined as Pointers | undefined);
 
   const triggerBoard = useCallback((cb: Callback<Board>) => {
@@ -11,14 +13,29 @@ export function App() {
       e && e.preventDefault && e.preventDefault();
       const newBoard = Board.deserialize(boardState);
       cb(newBoard);
-      setBoardState(newBoard.serialize());
+      history.push(newBoard.serialize());
+      setBoardState(history.peek());
     };
     return onTrigger;
   }, [boardState, setBoardState]);
 
-  const reset = useCallback((newBoard: Board) => {
-    setBoardState(newBoard.serialize());
+  const undo = useCallback(() => {
+    history.pop();
+    setBoardState(history.peek());
   }, [setBoardState]);
+
+  const reset = useCallback((newBoard: Board) => {
+    history.reset(newBoard.serialize());
+    setBoardState(history.peek());
+  }, [setBoardState]);
+
+  useEffect(() => {
+    window.addEventListener('keypress', evt => {
+      if (evt.code === 'KeyZ') {
+        undo();
+      };
+    });
+  }, [undo]);
 
   const board = Board.deserialize(boardState);
   const possibleMoves = hover ? board.possibleMoves(hover) : [];
@@ -27,6 +44,7 @@ export function App() {
       board={board}
       possibleMoves={possibleMoves}
       onHover={setHover}
+      undo={undo}
       trigger={triggerBoard}
       reset={reset} />
   );

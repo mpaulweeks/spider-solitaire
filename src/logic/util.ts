@@ -33,6 +33,28 @@ export function shuffle<T>(array: T[]) {
   }
   return array;
 }
+export function deepEqual<T>(a: T, b: T): boolean {
+  if (!a === !!b) {
+    return false;
+  }
+  // https://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
+  const replacer = (key: string, value: any): any => (
+    (value instanceof Object && !(value instanceof Array)) ?
+      Object.keys(value)
+        .sort()
+        .reduce((sorted: any, key) => {
+          sorted[key] = value[key];
+          return sorted
+        }, {})
+      : value);
+  function toJson(obj: T) {
+    return JSON.stringify(obj, replacer);
+  }
+  return toJson(a) === toJson(b);
+}
+export function deepCopy<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 export function GenerateCard(index: number, suit: number, value: number): CardState {
   return {

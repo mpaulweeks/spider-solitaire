@@ -1,8 +1,9 @@
 import React from 'react';
-import { Board, Callback, CardState, Column, GenerateDeck, Pointers, Trigger } from "../logic";
+import { Board, Callback, CardState, Column, EmptyCallback, GenerateDeck, Pointers, Trigger } from "../logic";
 import { ViewColumn } from './ViewColumn';
 
 import styled from 'styled-components';
+import { toUnicode } from 'punycode';
 const CompBoard = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,16 +33,18 @@ const CompColumnContainer = styled.div`
 `;
 
 export function ViewBoard(props: {
-  board: Board,
-  possibleMoves: Column[],
-  onHover: Callback<Pointers | undefined>,
-  trigger: Trigger<Board>,
-  reset: Callback<Board>,
+  board: Board;
+  possibleMoves: Column[];
+  onHover: Callback<Pointers | undefined>;
+  undo: EmptyCallback;
+  trigger: Trigger<Board>;
+  reset: Callback<Board>;
 }) {
   const {
     board,
     possibleMoves,
     onHover,
+    undo,
     trigger,
     reset,
   } = props;
@@ -76,6 +79,9 @@ export function ViewBoard(props: {
             Deal {remainingDeals}
           </button>
         ) : null}
+        <button onClick={undo}>
+          Undo (Z)
+        </button>
       </CompHeader>
       <CompColumnContainer>
         {board.columns.map((column, ci) => (
