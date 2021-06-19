@@ -32,7 +32,7 @@ export function ViewColumn(props: {
           column={column}
           card={undefined}
           canReceiveHover={canReceiveHover}
-          onHover={() => { }}
+          onHover={() => undefined}
           trigger={trigger}
         />
       )}

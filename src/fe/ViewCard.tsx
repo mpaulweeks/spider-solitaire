@@ -57,9 +57,9 @@ export function ViewCard(props: {
     trigger,
   } = props;
   if (!card) {
-    const background = canReceiveHover ? 'lightgreen' : 'white';
+    const emptyBg = canReceiveHover ? 'lightgreen' : 'white';
     return (
-      <CompCard canMove={false} color='grey' background={background}>
+      <CompCard canMove={false} color='grey' background={emptyBg}>
         (empty)
       </CompCard>
     );
@@ -67,7 +67,7 @@ export function ViewCard(props: {
   if (card.state.faceUp) {
     const pointer: Pointers = { columnIndex: column.index, cardId: card.state.id, };
     const canMove = column.canMove(card);
-    const background = (
+    const faceUpBg = (
       (!canMove && 'lightgrey') ||
       (canReceiveHover && 'lightgreen') ||
       'white'
@@ -76,7 +76,7 @@ export function ViewCard(props: {
       <CompCard
         canMove={canMove}
         color={suitToColor[card.suit]}
-        background={background}
+        background={faceUpBg}
         onClick={trigger(b => b.performMoveToPile(pointer))}
         onContextMenu={trigger(b => b.performMoveToEmpty(pointer))}
         onMouseEnter={() => onHover(pointer)}
@@ -86,7 +86,7 @@ export function ViewCard(props: {
       </CompCard>
     );
   }
-  const background = `repeating-linear-gradient(
+  const hiddenBg = `repeating-linear-gradient(
     45deg,
     #606dbc,
     #606dbc 10px,
@@ -94,7 +94,7 @@ export function ViewCard(props: {
     #465298 20px
   )`;
   return (
-    <CompCard canMove={false} color='white' background={background}>
+    <CompCard canMove={false} color='white' background={hiddenBg}>
       ???
     </CompCard>
   );

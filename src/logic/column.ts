@@ -2,7 +2,7 @@ import { Card } from "./card";
 import { CardState, ColumnState } from "./types";
 
 export class Column {
-  constructor(readonly index: number, readonly cards: Card[] = []) { }
+  constructor(readonly index: number, readonly cards: Card[] = []) {}
 
   deal(state: CardState) {
     this.cards.push(new Card(state));
@@ -12,13 +12,19 @@ export class Column {
     this.cards[this.cards.length - 1]?.reveal();
   }
   private relIndexOf(card: Card): number {
-    return this.cards.findIndex(c => c.state.id === card.state.id);
+    return this.cards.findIndex((c) => c.state.id === card.state.id);
   }
   canMove(card: Card) {
-    if (!card.state.faceUp) { return false; }
+    if (!card.state.faceUp) {
+      return false;
+    }
     const index = this.relIndexOf(card);
-    if (index < 0) { return false; }
-    if (index === this.cards.length - 1) { return true; }
+    if (index < 0) {
+      return false;
+    }
+    if (index === this.cards.length - 1) {
+      return true;
+    }
     const head = this.getHead();
     if (head) {
       const headIndex = this.relIndexOf(head);
@@ -30,7 +36,9 @@ export class Column {
   }
   pop(topCard: Card): Card[] {
     const index = this.relIndexOf(topCard);
-    if (index < 0) { throw new Error('illegal move'); }
+    if (index < 0) {
+      throw new Error("illegal move");
+    }
     const popped: Card[] = [];
     while (this.cards.length > index) {
       popped.push(this.cards.pop()!);
@@ -44,9 +52,13 @@ export class Column {
   }
   checkForRun() {
     const head = this.getHead();
-    if (head?.value !== 12) { return; }
+    if (head?.value !== 12) {
+      return;
+    }
     const leaf = this.getLeaf();
-    if (leaf?.value !== 0) { return; }
+    if (leaf?.value !== 0) {
+      return;
+    }
     this.pop(head);
   }
 

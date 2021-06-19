@@ -38,15 +38,15 @@ export function deepEqual<T>(a: T, b: T): boolean {
     return false;
   }
   // https://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
-  const replacer = (key: string, value: any): any => (
-    (value instanceof Object && !(value instanceof Array)) ?
-      Object.keys(value)
-        .sort()
-        .reduce((sorted: any, key) => {
-          sorted[key] = value[key];
-          return sorted
-        }, {})
-      : value);
+  const replacer = (key1: string, value: any): any =>
+    value instanceof Object && !(value instanceof Array)
+      ? Object.keys(value)
+          .sort()
+          .reduce((sorted: any, key2) => {
+            sorted[key2] = value[key2];
+            return sorted;
+          }, {})
+      : value;
   function toJson(obj: T) {
     return JSON.stringify(obj, replacer);
   }
@@ -56,7 +56,11 @@ export function deepCopy<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
 
-export function GenerateCard(index: number, suit: number, value: number): CardState {
+export function GenerateCard(
+  index: number,
+  suit: number,
+  value: number
+): CardState {
   return {
     id: index,
     code: suit * 100 + value,

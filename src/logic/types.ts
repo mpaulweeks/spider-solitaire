@@ -15,7 +15,7 @@ export type BoardState = {
   columns: ColumnState[];
 };
 
-export type Pointers = { columnIndex: number, cardId: number };
+export type Pointers = { columnIndex: number; cardId: number };
 
 export type EmptyCallback = () => void;
 export type Callback<T> = (arg: T) => void;

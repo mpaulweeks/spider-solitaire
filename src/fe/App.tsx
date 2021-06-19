@@ -10,7 +10,9 @@ export function App() {
 
   const triggerBoard = useCallback((cb: Callback<Board>) => {
     const onTrigger = (e: any) => {
-      e && e.preventDefault && e.preventDefault();
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
       const newBoard = Board.deserialize(boardState);
       cb(newBoard);
       history.push(newBoard.serialize());

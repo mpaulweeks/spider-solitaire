@@ -29,18 +29,25 @@ export class Board {
       c.revealBottom();
     });
   }
-  private resolvePointers(pointers: Pointers): { column: Column, card: Card | undefined } {
-    const column = this.columns.filter(c => c.index === pointers.columnIndex)[0];
-    const card = column.cards.filter(c => c.state.id === pointers.cardId)[0];
+  private resolvePointers(pointers: Pointers): {
+    column: Column;
+    card: Card | undefined;
+  } {
+    const column = this.columns.filter(
+      (c) => c.index === pointers.columnIndex
+    )[0];
+    const card = column.cards.filter((c) => c.state.id === pointers.cardId)[0];
     return { column, card };
   }
   private possibleMovesFromObj(column: Column, card?: Card): Column[] {
-    if (!card) { return []; }
-    const otherCols = range(this.columns.length - 1).map(i => {
+    if (!card) {
+      return [];
+    }
+    const otherCols = range(this.columns.length - 1).map((i) => {
       const colId = (column.index + i + 1) % this.columns.length;
       return this.columns[colId];
     });
-    const valid = otherCols.filter(col => card.canMoveBelowColumn(col));
+    const valid = otherCols.filter((col) => card.canMoveBelowColumn(col));
     return valid;
   }
   possibleMoves(pointers: Pointers) {
@@ -49,11 +56,15 @@ export class Board {
   }
   performMoveToPile(pointers: Pointers) {
     const { column, card } = this.resolvePointers(pointers);
-    if (!card) { return; }
+    if (!card) {
+      return;
+    }
     const canMove = column.canMove(card);
-    if (!canMove) { return; }
+    if (!canMove) {
+      return;
+    }
     const possibleMoves = this.possibleMovesFromObj(column, card);
-    const nonEmpty = possibleMoves.filter(col => col.cards.length > 0);
+    const nonEmpty = possibleMoves.filter((col) => col.cards.length > 0);
     const dest = nonEmpty[0];
     if (dest) {
       const popped = column.pop(card);
@@ -62,11 +73,15 @@ export class Board {
   }
   performMoveToEmpty(pointers: Pointers) {
     const { column, card } = this.resolvePointers(pointers);
-    if (!card) { return; }
+    if (!card) {
+      return;
+    }
     const canMove = column.canMove(card);
-    if (!canMove) { return; }
+    if (!canMove) {
+      return;
+    }
     const possibleMoves = this.possibleMovesFromObj(column, card);
-    const empty = possibleMoves.filter(col => col.cards.length === 0);
+    const empty = possibleMoves.filter((col) => col.cards.length === 0);
     const dest = empty[0];
     if (dest) {
       const popped = column.pop(card);
@@ -91,7 +106,7 @@ export class Board {
 
   static createNew(originalDeck: DeckState) {
     const numColumns = 10;
-    const columns = range(numColumns).map(i => new Column(i));
+    const columns = range(numColumns).map((i) => new Column(i));
     const remainingDeck = originalDeck.concat();
 
     // deal all but 5 deals
