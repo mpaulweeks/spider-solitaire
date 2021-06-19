@@ -1,5 +1,5 @@
 import React from 'react';
-import { Board, Callback, GenerateDeck, Trigger } from "../logic";
+import { Board, Callback, CardState, Column, GenerateDeck, Pointers, Trigger } from "../logic";
 import { ViewColumn } from './ViewColumn';
 
 import styled from 'styled-components';
@@ -29,15 +29,20 @@ const CompColumnContainer = styled.div`
 
 export function ViewBoard(props: {
   board: Board,
+  possibleMoves: Column[],
+  onHover: Callback<Pointers | undefined>,
   trigger: Trigger<Board>,
   reset: Callback<Board>,
 }) {
   const {
     board,
+    possibleMoves,
+    onHover,
     trigger,
     reset,
   } = props;
   const remainingDeals = board.remainingDeals();
+  const possibleMoveIds = possibleMoves.map(col => col.index);
   return (
     <CompBoard>
       <CompHeader>
@@ -63,7 +68,7 @@ export function ViewBoard(props: {
       </CompHeader>
       <CompColumnContainer>
         {board.columns.map((column, ci) => (
-          <ViewColumn key={ci} column={column} trigger={trigger} />
+          <ViewColumn key={ci} column={column} canMove={possibleMoveIds.includes(ci)} onHover={onHover} trigger={trigger} />
         ))}
       </CompColumnContainer>
     </CompBoard>

@@ -15,5 +15,7 @@ export type BoardState = {
   columns: ColumnState[];
 };
 
+export type Pointers = { columnIndex: number, cardId: number };
+
 export type Callback<T> = (arg: T) => void;
 export type Trigger<T> = (cb: Callback<T>) => Callback<any>;

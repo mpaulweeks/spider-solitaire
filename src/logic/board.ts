@@ -1,6 +1,6 @@
 import { Card } from "./card";
 import { Column } from "./column";
-import { BoardState, DeckState } from "./types";
+import { BoardState, DeckState, Pointers } from "./types";
 import { range } from "./util";
 
 export class Board {
@@ -29,7 +29,12 @@ export class Board {
       c.revealBottom();
     });
   }
-  possibleMoves(column: Column, card: Card): Column[] {
+  private resolvePointers(pointers: Pointers) {
+    const column = this.columns.filter(c => c.index === pointers.columnIndex)[0];
+    const card = column.cards.filter(c => c.state.id === pointers.cardId)[0];
+    return { column, card };
+  }
+  private possibleMovesFromObj(column: Column, card: Card): Column[] {
     const otherCols = range(this.columns.length - 1).map(i => {
       const colId = (column.index + i + 1) % this.columns.length;
       return this.columns[colId];
@@ -37,12 +42,15 @@ export class Board {
     const valid = otherCols.filter(col => card.canMoveBelowColumn(col));
     return valid;
   }
-  performMove(pointers: { columnIndex: number, cardId: number }) {
-    const column = this.columns.filter(c => c.index === pointers.columnIndex)[0];
-    const card = column.cards.filter(c => c.state.id === pointers.cardId)[0];
+  possibleMoves(pointers: Pointers) {
+    const { column, card } = this.resolvePointers(pointers);
+    return this.possibleMovesFromObj(column, card);
+  }
+  performMove(pointers: Pointers) {
+    const { column, card } = this.resolvePointers(pointers);
     const canMove = column.canMove(card);
     if (!canMove) { return; }
-    const possibleMoves = this.possibleMoves(column, card);
+    const possibleMoves = this.possibleMovesFromObj(column, card);
     const dest = possibleMoves[0];
     if (dest) {
       const popped = column.pop(card);

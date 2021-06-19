@@ -1,6 +1,6 @@
 import React from 'react';
 import { ViewCard } from './ViewCard';
-import { Board, Column, Trigger } from "../logic";
+import { Board, Callback, Column, Pointers, Trigger } from "../logic";
 
 import styled from 'styled-components';
 const CompColumn = styled.div`
@@ -14,20 +14,37 @@ const CompColumn = styled.div`
 `;
 
 export function ViewColumn(props: {
-  column: Column,
-  trigger: Trigger<Board>,
+  column: Column;
+  canMove: boolean;
+  onHover: Callback<Pointers | undefined>;
+  trigger: Trigger<Board>;
 }) {
   const {
     column,
+    canMove,
+    onHover,
     trigger,
   } = props;
   return (
     <CompColumn>
       {column.cards.length === 0 && (
-        <ViewCard column={column} card={undefined} trigger={trigger} />
+        <ViewCard
+          column={column}
+          card={undefined}
+          canMove={canMove}
+          onHover={() => { }}
+          trigger={trigger}
+        />
       )}
-      {column.cards.map((card, ci) => (
-        <ViewCard key={ci} column={column} card={card} trigger={trigger} />
+      {column.cards.map((card, ci, arr) => (
+        <ViewCard
+          key={ci}
+          column={column}
+          card={card}
+          canMove={canMove && ci === arr.length - 1}
+          onHover={onHover}
+          trigger={trigger}
+        />
       ))}
     </CompColumn>
   )

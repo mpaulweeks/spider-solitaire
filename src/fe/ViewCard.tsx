@@ -1,8 +1,8 @@
 import React from 'react';
-import { Board, Card, Column, Trigger } from "../logic";
+import { Board, Callback, Card, Column, Pointers, Trigger } from "../logic";
 
 import styled from 'styled-components';
-const CompCard = styled.div<{ color: string }>`
+const CompCard = styled.div<{ color: string, canMoveTo: boolean }>`
   --suit: ${props => props.color};
   padding: 0.5em;
   width: 4em;
@@ -12,6 +12,8 @@ const CompCard = styled.div<{ color: string }>`
   border-radius: 0.5em;
 
   cursor: pointer;
+
+  background-color: ${props => props.canMoveTo ? 'lightgreen' : 'white'};
 `;
 
 const suitToSymbol = [
@@ -45,29 +47,40 @@ const valueToString = [
 export function ViewCard(props: {
   column: Column,
   card: Card | undefined,
+  canMove: boolean;
+  onHover: Callback<Pointers | undefined>,
   trigger: Trigger<Board>,
 }) {
   const {
     column,
     card,
+    canMove,
+    onHover,
     trigger,
   } = props;
   if (!card) {
     return (
-      <CompCard color='grey'>
+      <CompCard canMoveTo={canMove} color='grey'>
         (empty)
       </CompCard>
     );
   }
   if (card.state.faceUp) {
+    const pointer: Pointers = { columnIndex: column.index, cardId: card.state.id, };
     return (
-      <CompCard color={suitToColor[card.suit]} onClick={trigger(b => b.performMove({ columnIndex: column.index, cardId: card.state.id, }))}>
+      <CompCard
+        canMoveTo={canMove}
+        color={suitToColor[card.suit]}
+        onClick={trigger(b => b.performMove(pointer))}
+        onMouseEnter={() => onHover(pointer)}
+        onMouseLeave={() => onHover(undefined)}
+      >
         {valueToString[card.value]} {suitToSymbol[card.suit]}
       </CompCard>
     );
   }
   return (
-    <CompCard color='grey'>
+    <CompCard canMoveTo={canMove} color='grey'>
       ???
     </CompCard>
   );
