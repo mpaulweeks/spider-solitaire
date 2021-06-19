@@ -15,13 +15,13 @@ const CompColumn = styled.div`
 
 export function ViewColumn(props: {
   column: Column;
-  canMove: boolean;
+  canReceiveHover: boolean;
   onHover: Callback<Pointers | undefined>;
   trigger: Trigger<Board>;
 }) {
   const {
     column,
-    canMove,
+    canReceiveHover,
     onHover,
     trigger,
   } = props;
@@ -31,7 +31,7 @@ export function ViewColumn(props: {
         <ViewCard
           column={column}
           card={undefined}
-          canMove={canMove}
+          canReceiveHover={canReceiveHover}
           onHover={() => { }}
           trigger={trigger}
         />
@@ -41,7 +41,7 @@ export function ViewColumn(props: {
           key={ci}
           column={column}
           card={card}
-          canMove={canMove && ci === arr.length - 1}
+          canReceiveHover={canReceiveHover && ci === arr.length - 1}
           onHover={onHover}
           trigger={trigger}
         />

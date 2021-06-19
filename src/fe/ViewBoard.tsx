@@ -68,7 +68,7 @@ export function ViewBoard(props: {
       </CompHeader>
       <CompColumnContainer>
         {board.columns.map((column, ci) => (
-          <ViewColumn key={ci} column={column} canMove={possibleMoveIds.includes(ci)} onHover={onHover} trigger={trigger} />
+          <ViewColumn key={ci} column={column} canReceiveHover={possibleMoveIds.includes(ci)} onHover={onHover} trigger={trigger} />
         ))}
       </CompColumnContainer>
     </CompBoard>

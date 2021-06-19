@@ -29,12 +29,13 @@ export class Board {
       c.revealBottom();
     });
   }
-  private resolvePointers(pointers: Pointers) {
+  private resolvePointers(pointers: Pointers): { column: Column, card: Card | undefined } {
     const column = this.columns.filter(c => c.index === pointers.columnIndex)[0];
     const card = column.cards.filter(c => c.state.id === pointers.cardId)[0];
     return { column, card };
   }
-  private possibleMovesFromObj(column: Column, card: Card): Column[] {
+  private possibleMovesFromObj(column: Column, card?: Card): Column[] {
+    if (!card) { return []; }
     const otherCols = range(this.columns.length - 1).map(i => {
       const colId = (column.index + i + 1) % this.columns.length;
       return this.columns[colId];
@@ -48,6 +49,7 @@ export class Board {
   }
   performMove(pointers: Pointers) {
     const { column, card } = this.resolvePointers(pointers);
+    if (!card) { return; }
     const canMove = column.canMove(card);
     if (!canMove) { return; }
     const possibleMoves = this.possibleMovesFromObj(column, card);
